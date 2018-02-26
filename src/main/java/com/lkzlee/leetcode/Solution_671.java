@@ -41,8 +41,8 @@ public class Solution_671
 
 	public static void main(String[] args)
 	{
-		TreeNode t = new TreeNode(6);
-		t.left = new TreeNode(3);
+		TreeNode t = new TreeNode(3);
+		t.left = new TreeNode(7);
 		t.right = new TreeNode(5);
 		int sec = new Solution_671().findSecondMinimumValue(t);
 		System.out.println(sec);
