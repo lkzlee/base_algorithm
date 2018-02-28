@@ -7,7 +7,7 @@ package com.lkzlee.leetcode;
  * （即 0 1 2 4 5 6 7 将变成 4 5 6 7 0 1 2）。
  * 给你一个目标值来搜索，如果数组中存在这个数则返回它的索引，否则返回 -1。
  * 你可以假设数组中不存在重复。
- * 思路：二分查找，但是存在旋转的可能，所以先找出旋转点，然后二分查找
+ * 思路：二分查找，但是存在旋转的可能，所以先找出左边有序还是右边有序，然后二分查找
  */
 public class Solution_33
 {
@@ -31,11 +31,11 @@ public class Solution_33
 			{
 				if (target < nums[mid] && target >= nums[low])
 				{
-					high = mid-1;
+					high = mid - 1;
 				}
 				else
 				{
-					low = mid+1;
+					low = mid + 1;
 				}
 
 			}
@@ -43,11 +43,11 @@ public class Solution_33
 			{
 				if (target > nums[mid] && target <= nums[high])
 				{
-					low = mid+1;
+					low = mid + 1;
 				}
 				else
 				{
-					high = mid-1;
+					high = mid - 1;
 				}
 			}
 		}
