@@ -1,5 +1,7 @@
 package com.lkzlee.leetcode;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /***
@@ -21,7 +23,7 @@ public class Solution_200
 		{
 			for (int j = 0; j < grid[i].length; j++)
 			{
-				rst += numDFS_stack(grid, vst, i, j);
+				rst += numBFS_queue(grid, vst, i, j);
 			}
 		}
 		return rst;
@@ -87,6 +89,39 @@ public class Solution_200
 					continue;
 				vst[x][y] = true;
 				stack.push(new int[] { x, y });
+			}
+		}
+		return 1;
+	}
+
+	private int numBFS_queue(char[][] grid, boolean[][] vst, int i, int j)
+	{
+		if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length)
+			return 0;
+		if (grid[i][j] == '0')
+			return 0;
+		if (vst[i][j])
+			return 0;
+		vst[i][j] = true;
+		Queue<int[]> queue = new LinkedList<>();
+		queue.add(new int[] { i, j });
+		int[][] dir = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+		while (!queue.isEmpty())
+		{
+			int[] d = queue.poll();
+			for (int[] t : dir)
+			{
+				int x = d[0] + t[0];
+				int y = d[1] + t[1];
+				if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length)
+					continue;
+				/***
+				 * 	如果已访问过
+				 */
+				if (grid[x][y] == '0' || vst[x][y])
+					continue;
+				vst[x][y] = true;
+				queue.add(new int[] { x, y });
 			}
 		}
 		return 1;
