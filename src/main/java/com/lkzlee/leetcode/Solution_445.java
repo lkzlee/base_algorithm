@@ -23,22 +23,119 @@ public class Solution_445
 			return l2;
 		if (l2.val == 0)
 			return l1;
-		int lens1 = getListNodeLens(l1);
-		int lens2 = getListNodeLens(l2);
-		ListNode t1 =
-
+		/***
+		 * 第一种算法，链表逆转,然后进行想加
+		 */
+		l1 = reverseList(l1);
+		l2 = reverseList(l2);
+		//		printListNode(l1);
+		//		printListNode(l2);
+		ListNode rs = new ListNode(-1);
+		int ifJin = 0;
+		while (l1 != null && l2 != null)
+		{
+			int v = l1.val + l2.val + ifJin;
+			if (v < 10)
+			{
+				ifJin = 0;
+			}
+			else
+			{
+				ifJin = 1;
+				v = v - 10;
+			}
+			ListNode t = rs.next;
+			ListNode vNode = new ListNode(v);
+			rs.next = vNode;
+			vNode.next = t;
+			l1 = l1.next;
+			l2 = l2.next;
+		}
+		ifJin = addListNode(l2, rs, ifJin);
+		ifJin = addListNode(l1, rs, ifJin);
+		if (ifJin > 0)
+		{
+			ListNode vNode = new ListNode(1);
+			ListNode t = rs.next;
+			rs.next = vNode;
+			vNode.next = t;
+		}
+		return rs.next;
 	}
 
-	private int getListNodeLens(ListNode l1)
+	private int addListNode(ListNode ln, ListNode p, int ifJin)
 	{
-		if (l1 == null)
-			return 0;
-		int lens = 0;
+		while (ln != null)
+		{
+			int v = ln.val + ifJin;
+			if (v < 10)
+			{
+				ifJin = 0;
+			}
+			else
+			{
+				ifJin = 1;
+				v = v - 10;
+			}
+			ListNode t = p.next;
+			ListNode vNode = new ListNode(v);
+			p.next = vNode;
+			vNode.next = t;
+			ln = ln.next;
+		}
+		return ifJin;
+	}
+
+	private void printListNode(ListNode l1)
+	{
 		while (l1 != null)
 		{
-			lens++;
+			System.out.print(l1.val);
 			l1 = l1.next;
+			if (l1 != null)
+				System.out.print("-->");
+			else
+				System.out.println();
 		}
-		return lens;
 	}
+
+	private ListNode reverseList(ListNode l)
+	{
+		if (l == null)
+			return null;
+		ListNode t1 = new ListNode(-1);
+		while (l != null)
+		{
+			ListNode p = l.next;
+			l.next = t1.next;
+			t1.next = l;
+			l = p;
+		}
+		return t1.next;
+	}
+
+	public static void main(String[] args)
+	{
+		ListNode ln1 = new ListNode(7);
+		ListNode p = ln1;
+		p.next = new ListNode(2);
+		p = p.next;
+		p.next = new ListNode(4);
+		p = p.next;
+		p.next = new ListNode(3);
+		p = p.next;
+		p.next = new ListNode(5);
+
+		ListNode ln2 = new ListNode(9);
+		p = ln2;
+		p.next = new ListNode(0);
+		p = p.next;
+		p.next = new ListNode(2);
+		p = p.next;
+		p.next = new ListNode(7);
+
+		ListNode r = new Solution_445().addTwoNumbers(ln1, ln2);
+		new Solution_445().printListNode(r);
+	}
+
 }
