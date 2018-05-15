@@ -1,4 +1,4 @@
-package com.lkzlee.leetcode;
+package com.lkzlee.leetcode.binarySearch;
 
 import java.util.Random;
 
