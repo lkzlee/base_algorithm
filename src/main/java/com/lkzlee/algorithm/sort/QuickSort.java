@@ -30,7 +30,7 @@ public class QuickSort
 	private static int partionUpdate(int[] arr, int low, int high)
 	{
 		int x = arr[low];
-		while (true)
+		while (low < high)
 		{
 			while (low < high && arr[high] >= x)
 				high--;
@@ -38,9 +38,6 @@ public class QuickSort
 			while (low < high && arr[low] < x)
 				low++;
 			arr[high] = arr[low];
-			if (low >= high)
-				break;
-
 		}
 		arr[low] = x;
 		return low;
@@ -49,7 +46,7 @@ public class QuickSort
 	public static void main(String[] args)
 	{
 		int arr[] =
-		{ 9, 4, 1, 4, 3, 8, 26, 9, 12, 34, 29 };
+				{ 9, 4, 1, 4, 3, 8, 26, 9, 12, 34, 29 };
 		System.out.println("排序前：" + Arrays.toString(arr));
 		quickSort(arr, 0, arr.length - 1);
 		System.out.println("排序后：" + Arrays.toString(arr));
