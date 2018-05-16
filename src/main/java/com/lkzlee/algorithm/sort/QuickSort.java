@@ -37,9 +37,9 @@ public class QuickSort
 			arr[low] = arr[high];
 			while (low < high && arr[low] < x)
 				low++;
+			arr[high] = arr[low];
 			if (low >= high)
 				break;
-			arr[high] = arr[low];
 
 		}
 		arr[low] = x;
