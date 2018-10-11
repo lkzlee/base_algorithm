@@ -1,4 +1,4 @@
-package com.lkzlee.leetcode;
+package com.lkzlee.leetcode.BFS_DFS;
 
 import java.util.LinkedList;
 import java.util.Queue;
