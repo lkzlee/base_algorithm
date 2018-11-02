@@ -1,6 +1,9 @@
 package com.lkzlee.leetcode.BFS_DFS;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 /***
  * @author:lkzlee
@@ -24,11 +27,40 @@ public class Solution_279
 {
 	public int numSquares(int n)
 	{
+		/***
+		 * 生成一个平方数序列，然后进行广度优先遍历
+		 * 第一种解法采用广度优先遍历找出最小的平方数个数
+		 */
+		//		return BFS(n);
+		/**
+		 * 第二种算法采用动态规划，定义dp[i] 表示i的最小平方数个数
+		 */
+		int[] dp = new int[n + 1];
+		dp[1] = 1;
+		/***
+		 * 还要另外一种四平方定理
+		 */
+		List<Integer> squaresList = generateSquaresList(n);
+		for (int i = 2; i <= n; i++)
+		{
+			int minNums = Integer.MAX_VALUE;
+			for (int t : squaresList)
+			{
+				if (i < t)
+					break;
+				minNums = Math.min(minNums, dp[i - t] + 1);
+			}
+			dp[i] = minNums;
+		}
+		return dp[n];
+	}
+
+	private int BFS(int n)
+	{
 		int[][] direct = new int[][] { { 0, -1 }, { 0, 1 }, { -1, 0 }, { 1, 0 } };
 		Queue<Integer> queue = new LinkedList<>();
 		queue.add(n);
 		List<Integer> squaresList = generateSquaresList(n);
-		System.out.println(squaresList);
 		int minNums = 0;
 		while (!queue.isEmpty())
 		{
@@ -65,7 +97,7 @@ public class Solution_279
 
 	public static void main(String[] args)
 	{
-		int rs = new Solution_279().numSquares(12);
+		int rs = new Solution_279().numSquares(13);
 		System.out.println(rs);
 	}
 }
