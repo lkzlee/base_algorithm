@@ -52,8 +52,6 @@ public class LRUCache<T>
 		if (!map.containsKey(key))
 			return null;
 		Node node = map.get(key);
-		if (node == null)
-			return null;
 		node.next.prev = node.prev;
 		node.prev.next = node.next;
 		appendTail(node);
@@ -95,18 +93,17 @@ public class LRUCache<T>
 	public void printNode()
 	{
 		Node p = head.next;
-		do
+		while (p != tail)
 		{
 			System.out.print(p.key + ":" + p.value + "->");
 			p = p.next;
 		}
-		while (p != tail);
 		System.out.println();
 	}
 
 	public static void main(String[] args)
 	{
-		LRUCache cache = new LRUCache<String>();
+		LRUCache cache = new LRUCache<String>(3);
 		cache.put("name", "lkzlee");
 		cache.put("age", "lkde");
 		cache.put("address", "1254");
