@@ -6,7 +6,7 @@ package com.lkzlee.algorithm.DP;
  * @Desc:
  * 有一个容量为N个物品的背包，要用这个背包装下物品的价值最大，这些物品有两个属性：重量 w 和价值 v
  */
-public class Package0_1
+public class BackPackage0_1
 {
 	public int knapsack(int W, int N, int[] weights, int[] values)
 	{
@@ -23,16 +23,9 @@ public class Package0_1
 
 			int w = weights[i - 1];
 			int v = values[i - 1];
-			for (int j = 1; j <= w; j++)
+			for (int j = w; j <= W; j++)
 			{
-				if (j >= w)
-				{
-					dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - w] + v);
-				}
-				else
-				{
-					dp[i][j] = dp[i - 1][j];
-				}
+				dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - w] + v);
 			}
 		}
 		return dp[N][W];
@@ -55,12 +48,13 @@ public class Package0_1
 
 			int w = weights[i - 1];
 			int v = values[i - 1];
-			for (int j = 1; j <= w; j++)
+			/***
+			 * 因为 dp[j-w] 表示 dp[i-1][j-w]，因此不能先求 dp[i][j-w]，以防将 dp[i-1][j-w] 覆盖。
+			 * 也就是说要先计算 dp[i][j] 再计算 dp[i][j-w]，在程序实现时需要按倒序来循环求解。
+			 */
+			for (int j = W; j >= w; j--)
 			{
-				if (j >= w)
-				{
-					dp[j] = Math.max(dp[j], dp[j - w] + v);
-				}
+				dp[j] = Math.max(dp[j], dp[j - w] + v);
 			}
 		}
 		return dp[W];
