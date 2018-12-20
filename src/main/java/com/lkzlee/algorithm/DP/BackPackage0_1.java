@@ -4,6 +4,9 @@ package com.lkzlee.algorithm.DP;
  * @author:lkzlee
  * @date: 2018/12/17 14:50
  * @Desc:
+ * 背包问题9讲（这个讲的特别好，强烈推荐）：
+ * https://www.kancloud.cn/kancloud/pack/70131
+ *
  * 有一个容量为N个物品的背包，要用这个背包装下物品的价值最大，这些物品有两个属性：重量 w 和价值 v
  */
 public class BackPackage0_1
@@ -23,9 +26,12 @@ public class BackPackage0_1
 
 			int w = weights[i - 1];
 			int v = values[i - 1];
-			for (int j = w; j <= W; j++)
+			for (int j = 1; j <= W; j++)
 			{
-				dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - w] + v);
+				if (j < w)
+					dp[i][j] = dp[i - 1][j];
+				else
+					dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - w] + v);
 			}
 		}
 		return dp[N][W];

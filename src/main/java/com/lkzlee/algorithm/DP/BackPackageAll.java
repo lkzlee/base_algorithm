@@ -26,11 +26,14 @@ public class BackPackageAll
 		{
 			int w = weights[i];
 			int v = values[i];
-			for (int j = w; j <= W; j++)
+			for (int j = 1; j <= W; j++)
 			{
 				for (int k = 1; k <= j / w; k++)
 				{
-					dp[i][j] = Math.max(dp[i - 1][j - k * w] + v, dp[i - 1][j]);
+					if (j < k * w)
+						dp[i][j] = dp[i - 1][j];
+					else
+						dp[i][j] = Math.max(dp[i - 1][j - k * w] + v, dp[i - 1][j]);
 				}
 			}
 		}
