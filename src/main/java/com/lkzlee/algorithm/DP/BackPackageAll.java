@@ -30,10 +30,7 @@ public class BackPackageAll
 			{
 				for (int k = 1; k <= j / w; k++)
 				{
-					if (j < k * w)
-						dp[i][j] = dp[i - 1][j];
-					else
-						dp[i][j] = Math.max(dp[i - 1][j - k * w] + v, dp[i - 1][j]);
+					dp[i][j] = Math.max(dp[i][j], Math.max(dp[i - 1][j - k * w] + k * v, dp[i - 1][j]));
 				}
 			}
 		}
