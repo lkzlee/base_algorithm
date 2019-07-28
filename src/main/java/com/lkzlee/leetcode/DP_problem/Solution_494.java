@@ -90,7 +90,7 @@ public class Solution_494
 	public static void main(String[] args)
 	{
 		int[] nums = new int[] { 1, 2, 7, 9, 981 };
-		int rs = new Solution_494().findTargetSumWays(nums, 1000000000);
+		int rs = new Solution_494().findTargetSumWays(nums, 1020);
 		System.out.println(rs);
 	}
 }

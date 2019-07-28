@@ -34,74 +34,70 @@ import java.util.List;
  * ]
  * 解释: 4 皇后问题存在两个不同的解法。
  */
-public class Solution_51
-{
-	public List<List<String>> solveNQueens(int n)
-	{
-		List<List<String>> list = new ArrayList<>();
-		if (n <= 0)
-			return list;
-		List<String> tempList = new ArrayList<>();
-		boolean[] mark = new boolean[n];
-		doSolve(n, tempList, list, mark);
-		return list;
+public class Solution_51 {
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> list = new ArrayList<>();
+        if (n <= 0)
+            return list;
+        List<String> tempList = new ArrayList<>();
+        boolean[] mark = new boolean[n];
+        doSolve(n, tempList, list, mark);
+        return list;
 
-	}
+    }
 
-	private void doSolve(int n, List<String> tempList, List<List<String>> list, boolean[] mark)
-	{
-		if (tempList.size() == n)
-		{
-			List<String> rsList = new ArrayList<>();
-			rsList.addAll(tempList);
-			list.add(rsList);
-			return;
-		}
-		for (int i = 0; i < n; i++)
-		{
-			if (mark[i])
-				continue;
-			String genStr = genQueen(i, n);
-			boolean ifSit = checkQueen(genStr, tempList);
-			if (!ifSit)
-				continue;
-			mark[i] = true;
-			tempList.add(genStr);
-			doSolve(n, tempList, list, mark);
-			mark[i] = false;
-			tempList.remove(tempList.size() - 1);
-		}
-	}
+    private void doSolve(int n, List<String> tempList, List<List<String>> list, boolean[] mark) {
+        if (tempList.size() == n) {
+            List<String> rsList = new ArrayList<>();
+            rsList.addAll(tempList);
+            list.add(rsList);
+            return;
+        }
+        //从0开始找皇后的放置位置
+        for (int i = 0; i < n; i++) {
+            if (mark[i])
+                continue;
+            //i位置放置皇后
+            String genStr = genQueen(i, n);
+            boolean ifSit = checkQueen(genStr, tempList);
+            if (!ifSit)
+                continue;
+            mark[i] = true;
+            tempList.add(genStr);
+            doSolve(n, tempList, list, mark);
+            mark[i] = false;
+            tempList.remove(tempList.size() - 1);
+        }
+    }
 
-	private boolean checkQueen(String genStr, List<String> tempList)
-	{
-		int locCols = genStr.indexOf("Q");
-		int locRow = tempList.size();
-		for (int i = 0; i < tempList.size(); i++)
-		{
-			int j = tempList.get(i).indexOf("Q");
-			if (locCols == j || Math.abs(locCols - j) == Math.abs(locRow - i))
-				return false;
-		}
-		return true;
-	}
+    private boolean checkQueen(String genStr, List<String> tempList) {
+        int locCols = genStr.indexOf("Q");
+        int locRow = tempList.size();
+        for (int i = 0; i < tempList.size(); i++) {
+            int j = tempList.get(i).indexOf("Q");
+			//不能在同一列，或者同一斜线上
+			//同一行已经由生成皇后（genQueen）保证，不必验证
+            if (locCols == j || Math.abs(locCols - j) == Math.abs(locRow - i))
+                return false;
+        }
+        return true;
+    }
 
-	private String genQueen(int i, int n)
-	{
-		StringBuilder sb = new StringBuilder();
-		for (int j = 0; j < n; j++)
-		{
-			if (j != i)
-				sb.append('.');
-			else
-				sb.append('Q');
-		}
-		return sb.toString();
-	}
+    //生成皇后的位置摆放
+    //i表示皇后的放置位置，n表示有几列（也代表皇后）
+    private String genQueen(int i, int n) {
+        StringBuilder sb = new StringBuilder();
+        for (int j = 0; j < n; j++) {
+            if (j != i)
+                sb.append('.');
+            else
+                sb.append('Q');
+        }
+        return sb.toString();
+    }
 
-	public static void main(String[] args)
-	{
-		List<List<String>> rs=new Solution_51().solveNQueens(8);
-		System.out.println(rs);
-	}
+    public static void main(String[] args) {
+        List<List<String>> rs = new Solution_51().solveNQueens(8);
+        System.out.println(rs);
+    }
 }

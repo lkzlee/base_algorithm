@@ -59,7 +59,7 @@ public class Solution_216
 
 	public static void main(String[] args)
 	{
-		List<List<Integer>> rs = new Solution_216().combinationSum3(2, 18);
+		List<List<Integer>> rs = new Solution_216().combinationSum3(2, 9);
 		System.out.println(rs);
 	}
 }

@@ -35,7 +35,7 @@ public class Solution_130
 		 */
 		if (board == null || board.length <= 0 || board[0] == null || board[0].length <= 0)
 			return;
-
+		//从四个边界做四次dfs标记T，然后其余的全部标记为X，然后把T改回去
 		for (int i = 0; i < board.length; i++)
 		{
 			dfs(board, i, 0);
