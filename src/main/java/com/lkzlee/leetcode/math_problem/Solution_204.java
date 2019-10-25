@@ -45,9 +45,39 @@ public class Solution_204 {
         return true;
     }
 
+    //最大公约数
+    //对于最大公约数问题，因为需要计算 a % b ，而这个操作是比较耗时的，可以使用 编程之美：2.7 的方法，利用减法和移位操作来替换它。
+    //
+    //对于 a 和 b 的最大公约数 f(a, b)，有：
+    //
+    //1. 如果 a 和 b 均为偶数，f(a, b) = 2*f(a/2, b/2);
+    //2. 如果 a 是偶数 b 是奇数，f(a, b) = f(a/2, b);
+    //3. 如果 b 是偶数 a 是奇数，f(a, b) = f(a, b/2);
+    //4. 如果 a 和 b 均为奇数，f(a, b) = f(a, a-b);
+    //
+    //乘 2 和除 2 都可以转换为移位操作。
+    public int gcd(int m, int n) {
+        if (n == 0) return m;
+        //return gcd(n, m % n);
+        boolean isOddm = (m & 0x01) == 0;
+        boolean isOddn = (n & 0x01) == 0;
+        if (isOddm && isOddn) return 2 * gcd(m >> 1, n >> 1);
+        if (isOddm && !isOddn) return gcd(m >> 1, n);
+        if (!isOddm && isOddn) return gcd(m, n >> 1);
+        return gcd(m, m - n);
+    }
+
+    //最小公倍数
+    public int lcm(int m, int n) {
+        return m * n / gcd(m, n);
+    }
+
+    //
     public static void main(String[] args) {
         int n = 10;
         int rs = new Solution_204().countPrimes(n);
         System.out.println(rs);
+        int gct = new Solution_204().gcd(4, 6);
+        System.out.println(gct);
     }
 }
