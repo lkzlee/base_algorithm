@@ -41,11 +41,34 @@ public class Solution_628 {
         // 有两个负数及以上最大值一定非负，不可能取3个负，最大值要么取两个负数一个非负数，
         // 或者三个非负数，这样一来最大值要么一个最大非负数+两个最小负数，或者最大的三个数。
         //————————————————
-        Arrays.sort(nums);
+       /* Arrays.sort(nums);
         int m1 = nums[nums.length - 1] * nums[nums.length - 2] * nums[nums.length - 3];
         int m2 = nums[0] * nums[1] * nums[nums.length - 1];
         if (m1 > m2 ) return m1;
-        return m2;
+        return m2;*/
+        //还有第二种解法，和第一种类似，不过找出最大的三个数，和最小的2个数做乘积比较即可，不需要排序
+        int m1 = Integer.MIN_VALUE;
+        int m2 = Integer.MIN_VALUE;
+        int m3 = Integer.MIN_VALUE;
+        int n1 = Integer.MAX_VALUE;
+        int n2 = Integer.MAX_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            if (m1 < nums[i]) {
+                m3 = m2;
+                m2 = m1;
+                m1 = nums[i];
+            } else if (m2 < m1 && m2 < nums[i]) {
+                m3 = m2;
+                m2 = nums[i];
+            } else if (m3 < m2 && m3 < nums[i]) m3 = nums[i];
+            if (n1 > nums[i]) {
+                n2 = n1;
+                n1 = nums[i];
+            } else if (n2 > n1 && n2 > nums[i]) n2 = nums[i];
+        }
+        int rs1 = m1 * m2 * m3;
+        int rs2 = n1 * n2 * m1;
+        return rs1 > rs2 ? rs1 : rs2;
     }
 
     public static void main(String[] args) {
