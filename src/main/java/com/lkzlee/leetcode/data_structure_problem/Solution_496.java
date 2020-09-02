@@ -3,6 +3,7 @@ package com.lkzlee.leetcode.data_structure_problem;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 /***
  * @author: lkzlee
@@ -45,6 +46,26 @@ public class Solution_496 {
         int[] ret = new int[nums1.length];
         Arrays.fill(ret, -1);
         if (nums2 == null || nums2.length <= 0) return ret;
+        //s1ForMe(nums1, nums2, ret);
+        s2ForLeet(nums1, nums2, ret);
+        return ret;
+    }
+
+    private void s2ForLeet(int[] nums1, int[] nums2, int[] ret) {
+        Stack<Integer> stack=new Stack<>();
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int n:nums2){
+            while (!stack.isEmpty()&&n>stack.peek()){
+                map.put(stack.pop(),n);
+            }
+            stack.add(n);
+        }
+        for(int i=0;i<nums1.length;i++){
+            if(map.containsKey(nums1[i])) ret[i]=map.get(nums1[i]);
+        }
+    }
+
+    private void s1ForMe(int[] nums1, int[] nums2, int[] ret) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int j = 0; j < nums2.length; j++) {
             map.put(nums2[j], j);
@@ -57,7 +78,6 @@ public class Solution_496 {
                 }
             }
         }
-        return ret;
     }
 
     public static void main(String[] args) {
