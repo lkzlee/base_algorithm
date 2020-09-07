@@ -2,7 +2,7 @@ package com.lkzlee.leetcode.data_structure_problem;
 
 import sun.security.util.ArrayUtil;
 
-import java.util.Arrays;
+import java.util.*;
 
 /***
  * @author: lkzlee
@@ -28,12 +28,46 @@ public class Solution_503 {
         if (nums == null || nums.length <= 0) return new int[]{};
         int[] ret = new int[nums.length];
         Arrays.fill(ret, -1);
-
+        //normalSovle(nums, ret, map);
+        int n = nums.length;
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < 2 * n; i++) {
+            while (!stack.isEmpty() && nums[i % n] > nums[stack.peek()]) {
+                ret[stack.pop()] = nums[i % n];
+            }
+            stack.push(i % n);
+        }
         return ret;
     }
 
-    public static void main(String[] args) {
+    private void normalSovle(int[] nums, int[] ret, Map<Integer, Integer> map) {
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[i] < nums[j]) {
+                    map.put(i, nums[j]);
+                    break;
+                }
+            }
+            if (map.containsKey(i)) continue;
+            for (int j = 0; j < i; j++) {
+                if (nums[i] < nums[j]) {
+                    map.put(i, nums[j]);
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(i)) {
+                ret[i] = map.get(i);
+            }
+        }
+    }
 
+    public static void main(String[] args) {
+        int[] nums = new int[]{100, 1, 11, 1, 120, 111, 123, 1, -1, -100};
+        int[] rs = new Solution_503().nextGreaterElements(nums);
+        System.out.println(Arrays.toString(rs));
+        //[120,11,120,120,123,123,-1,100,100,100]
     }
 }
 

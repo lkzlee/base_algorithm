@@ -16,38 +16,33 @@ import java.util.Arrays;
  * 输入: nums = [5,7,7,8,8,10], target = 6
  * 输出: [-1,-1]
  */
-public class Solution_34
-{
-	public int binarySearch(int[] nums, int target)
-	{
-		int low = 0, high = nums.length;
-		while (low < high)
-		{
-			int mid = low + (high - low) / 2;
-			if (nums[mid] >= target)
-				high = mid;
-			else
-				low = mid + 1;
-		}
-		return low;
-	}
+public class Solution_34 {
+    public int binarySearch(int[] nums, int target) {
+        int low = 0, high = nums.length;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (nums[mid] >= target)
+                high = mid;
+            else
+                low = mid + 1;
+        }
+        return low;
+    }
 
-	public int[] searchRange(int[] nums, int target)
-	{
-		if (nums == null || nums.length <= 0)
-			return new int[] { -1, -1 };
-		int s = binarySearch(nums, target);
-		int t = binarySearch(nums, target + 1) - 1;
+    public int[] searchRange(int[] nums, int target) {
+        if (nums == null || nums.length <= 0)
+            return new int[]{-1, -1};
+        int s = binarySearch(nums, target);
+        int t = binarySearch(nums, target + 1) - 1;
 
-		if (s == nums.length || nums[s] != target)
-			return new int[] { -1, -1 };
-		return new int[] { s, Math.max(s, t) };
-	}
+        if (s == nums.length || nums[s] != target)
+            return new int[]{-1, -1};
+        return new int[]{s, Math.max(s, t)};
+    }
 
-	public static void main(String[] args)
-	{
-		int[] nums = { 5, 7, 7, 8, 8, 10 };
-		int[] rs = new Solution_34().searchRange(nums, 6);
-		System.out.println(Arrays.toString(rs));
-	}
+    public static void main(String[] args) {
+        int[] nums = {5, 5, 7, 7, 8, 8, 10};
+        int[] rs = new Solution_34().searchRange(nums, 5);
+        System.out.println(Arrays.toString(rs));
+    }
 }
