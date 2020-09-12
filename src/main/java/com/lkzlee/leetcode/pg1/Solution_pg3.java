@@ -30,38 +30,27 @@ public class Solution_pg3 {
     public int minimumOperations(String leaves) {
         if (leaves == null || leaves.length() < 3) return 0;
         int rs = Integer.MAX_VALUE;
-        for (int i = 0; i < leaves.length(); i++) {
-            if (leaves.charAt(i) == 'y') {
-                rs = Math.min(rs, adjustNumLeaves(leaves, i));
-            } else {
-                rs = Math.min(rs, adjustNumLeaves(leaves, i) + 1);
+        int[][] dp = new int[leaves.length()][3];
+        for (int i = 0; i < dp.length; i++) {
+            for (int j = 0; j < dp[i].length; j++) {
+                dp[i][j] = (int) 1e5;
             }
         }
-        return rs;
+        dp[0][0] = leaves.charAt(0) == 'r' ? 0 : 1;
+        for (int i = 1; i < leaves.length(); i++) {
+            if (leaves.charAt(i) == 'r') {
+                dp[i][0] = dp[i - 1][0];
+                dp[i][1] = Math.min(dp[i - 1][1] + 1, dp[i - 1][0]);
+                dp[i][2] = Math.min(dp[i - 1][2], dp[i - 1][1]);
+            } else {
+                dp[i][0] = dp[i - 1][0] + 1;
+                dp[i][1] = Math.min(dp[i - 1][1], dp[i - 1][0]);
+                dp[i][2] = Math.min(dp[i - 1][1] + 1, dp[i - 1][2] + 1);
+            }
+        }
+        return dp[leaves.length() - 1][2];
     }
 
-    private int adjustNumLeaves(String leaves, int mid) {
-        int rs = 0;
-        int i = 0, j = leaves.length() - 1;
-        while (leaves.charAt(i) == 'r') i++;
-        while (leaves.charAt(j) == 'r') j--;
-        if (i == 0) rs++;
-        if (j == leaves.length() - 1) rs++;
-        int lr = 0, ly = 0;
-        int rr = 0, ry = 0;
-        while (i < mid) {
-            if (leaves.charAt(i) == 'y') ly++;
-            else lr++;
-            i++;
-        }
-        while (j > mid) {
-            if (leaves.charAt(j) == 'y') ry++;
-            else rr++;
-            j--;
-        }
-        rs += Math.min(lr, ly) + Math.min(rr, ry);
-        return rs;
-    }
 
     public static void main(String[] args) {
         String leaves = "ryryryryryryryr";
