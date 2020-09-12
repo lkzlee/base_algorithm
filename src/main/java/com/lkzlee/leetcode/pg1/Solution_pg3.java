@@ -39,9 +39,9 @@ public class Solution_pg3 {
         dp[0][0] = leaves.charAt(0) == 'r' ? 0 : 1;
         for (int i = 1; i < leaves.length(); i++) {
             if (leaves.charAt(i) == 'r') {
-                dp[i][0] = dp[i - 1][0];
-                dp[i][1] = Math.min(dp[i - 1][1] + 1, dp[i - 1][0]);
-                dp[i][2] = Math.min(dp[i - 1][2], dp[i - 1][1]);
+                dp[i][0] = dp[i - 1][0]; //调整最左变r最小次数
+                dp[i][1] = Math.min(dp[i - 1][1] + 1, dp[i - 1][0] + 1); // 调整y的最小次数
+                dp[i][2] = Math.min(dp[i - 1][2], dp[i - 1][1]); //调整右边r的最小次数
             } else {
                 dp[i][0] = dp[i - 1][0] + 1;
                 dp[i][1] = Math.min(dp[i - 1][1], dp[i - 1][0]);
