@@ -1,5 +1,8 @@
 package com.lkzlee.leetcode.pg1;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /***
  * 小扣打算去秋日市集，由于游客较多，小扣的移动速度受到了人流影响：
  *
@@ -48,7 +51,41 @@ package com.lkzlee.leetcode.pg1;
  * 1 <= inc, dec, cost[i] <= 10^6
  */
 public class Solution_pg4 {
+    Map<Integer, Long> map = new HashMap<>();
+    private static final int mod = (int) 1e7 + 9;
+
+    //这个题好像还是没做对
+    public long solve(int target, int inc, int dec, int[] jump, int[] cost) {
+        if (target == 0) return 0;
+        if (map.containsKey(target)) return map.get(target);
+        long s = target * inc;
+        for (int i = 0; i < jump.length; i++) {
+            s = Math.min(s, solve(target / jump[i], inc, dec, jump, cost) + cost[i] + (long) (target % jump[i]) * inc);
+            if (target > 1 && target % jump[i] != 0) {
+                s = Math.min(s, solve(target / jump[i] + 1, inc, dec, jump, cost) + cost[i] + (long) (jump[i] - target % jump[i]) * dec);
+            }
+        }
+        map.put(target, s);
+        return s;
+    }
+
     public int busRapidTransit(int target, int inc, int dec, int[] jump, int[] cost) {
-        return 0;
+        /***
+         * 到达位置target可以分为先到位置【target/jump[i]】(下取整的意思)，再经过一个jump[i]，
+         * 然后一步一步增加走到target，也可以先走到【target/jump[i]】+ 1位置，再经过jump[i]，
+         * 然后再一步一步减少到target，储存中间结果进行记忆化搜索
+         */
+        if (target == 0) return 0;
+        return (int) (solve(target, inc, dec, jump, cost) % mod);
+    }
+
+    public static void main(String[] args) {
+//        int target = 612, inc = 4, dec = 5;
+//        int[] jump = new int[]{3, 6, 8, 11, 5, 10, 4}, cost = new int[]{4, 7, 6, 3, 7, 6, 4};
+
+        int target = 31, inc = 5, dec = 3;
+        int[] jump = new int[]{6}, cost = new int[]{10};
+        int rs = new Solution_pg4().busRapidTransit(target, inc, dec, jump, cost);
+        System.out.println(rs);
     }
 }
