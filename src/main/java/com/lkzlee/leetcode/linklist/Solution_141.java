@@ -1,4 +1,4 @@
-package com.lkzlee.leetcode;
+package com.lkzlee.leetcode.linklist;
 
 import com.lkzlee.leetcode.datastructure.ListNode;
 
