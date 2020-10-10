@@ -42,7 +42,7 @@ public class Solution_142 {
      * @return
      */
     public ListNode detectCycle(ListNode head) {
-        if (head == null) return null;
+       /* if (head == null) return null;
         ListNode p = head, q = head;
         do {
             p = p.next;
@@ -56,7 +56,22 @@ public class Solution_142 {
             p = p.next;
             q = q.next;
         }
-        return p;
+        return p;*/
+        if (head == null) return null;
+        ListNode p = head, q = head;
+        //找环代码，这个更科学
+        while (p != null && q != null && q.next != null) {
+            p = p.next;
+            q = q.next.next;
+            if (p == q) break;
+        }
+        if (q == null || q.next == null) return null;
+        p = head;
+        while (p != null && q != null && p != q) {
+            p = p.next;
+            q = q.next;
+        }
+        return q;
     }
 
     public static void main(String[] args) {
